@@ -1,0 +1,21 @@
+html
+  head
+    title= title
+  body
+    nav(id= "navegacion")
+            a(href="/") INICIO
+            br
+            a(href="/form") GUARDA TUS PELÍCULAS FAVORITAS
+    header(id= "cabecera")
+      h1=message
+    div(id = "buscador") 
+      h2 BUSCADOR DE PELÍCULAS
+            br
+            input(type="text", name="peliTitulos" id="inputTitulos")
+            br
+            input(type="button", value="Buscar" id="tomarValor")
+    div(id = "informacion") 
+      h2 Visualice aquí sus películas favoritas:
+    
+  script(src="/script.js") 
+  link(rel="stylesheet", href="/home.css")    

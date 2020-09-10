@@ -1,0 +1,38 @@
+html
+html
+   head
+      title Guarde su película favorita.
+   body
+    div
+        nav
+            a(href="/") Inicio.
+    h1=titulo1
+      form(action = "/api/films", method = "POST")
+         div
+            label(for = "titulo") Titulo:  
+            br
+            input(type = "text" name = "titulo" id="nombre")
+         br
+         div
+            label(for = "epoca") Año:
+            br  
+            input(type = "text" name = "epoca" id = "epoca")
+         br
+         div
+            label(for = "genero") Género:
+            br  
+            input(type = "text" name = "genero" id = "genero")
+         br
+         div
+            label(for = "director") Director:
+            br  
+            input(type = "text" name = "director" id = "director")
+         br
+         div
+            label(for = "actors") Actores principales:
+            br  
+            input(type = "text" name = "actors" id = "actors")
+         br
+         button(type="reset") Restablecer
+         button(type = "submit" id = "btnForm") Guarde sus favoritos
+    script(src="/script2.js")
