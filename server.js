@@ -1,7 +1,7 @@
 const express = require ("express");
 const bodyParser = require ("body-parser");
 const pelis = require ("./moduloPelis");
-
+const bbdd = require("./modulos/m_bbdd.js");
 const app = express();
 
 //Utilizar un Middleware para visualizar las imágenes.
