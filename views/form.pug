@@ -11,28 +11,51 @@ html
          div
             label(for = "titulo") Titulo:  
             br
-            input(type = "text" name = "titulo" id="nombre")
+            input(type = "text" name = "titulo" id="nombre" value=tituloEdit)
          br
          div
             label(for = "epoca") Año:
             br  
-            input(type = "text" name = "epoca" id = "epoca")
+            input(type ="text" name = "epoca" id = "epoca" value=epocaEdit)
          br
          div
             label(for = "genero") Género:
             br  
-            input(type = "text" name = "genero" id = "genero")
+            input(type = "text" name = "genero" id = "genero" value=generoEdit)
          br
          div
             label(for = "director") Director:
             br  
-            input(type = "text" name = "director" id = "director")
+            input(type = "text" name = "director" id = "director" value=directorEdit)
          br
          div
             label(for = "actors") Actores principales:
             br  
-            input(type = "text" name = "actors" id = "actors")
+            input(type = "text" name = "actors" id= "actors" value=actorsEdit)
          br
+         div  
+            label(for= "sinopsis") Sinopsis:
+            br
+            input(type="text", name="sinopsis" id="sinopsis" value=sinopsisEdit)
+         br
+         div
+            label(for="idiomas") Idiomas:
+            br
+            input(type="text", name="idiomas" id="idiomas" value=idiomasEdit)
+         br
+         div
+            label(for="puntuacion") Puntuacion:
+            br
+            input(type="number", name="puntaje" id="puntuacion" value=puntuacionEdit)
+         br
+         div
+            label(for="produccion") Producción:
+            br
+            input(type="text", name="producter" id="produccion" value=produccionEdit) 
+         div  
+            label(for = "imagen") Póster:
+            br
+            input(type="file", name="image")
          button(type="reset") Restablecer
          button(type = "submit" id = "btnForm") Guarde sus favoritos
-    script(src="/script2.js")
+    script(src="/script2_ls.js")

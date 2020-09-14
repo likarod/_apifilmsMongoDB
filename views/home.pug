@@ -1,13 +1,14 @@
 html
   head
-    title= title
+    title= title 
+    link(rel="stylesheet", href="/home.css")
   body
     nav(id= "navegacion")
             a(href="/") INICIO
             br
             a(href="/form") GUARDA TUS PELÍCULAS FAVORITAS
     header(id= "cabecera")
-      h1=message
+      h1(class="cabeceraIntro")=message
     div(id = "buscador") 
       h2 BUSCADOR DE PELÍCULAS
             br
@@ -15,7 +16,7 @@ html
             br
             input(type="button", value="Buscar" id="tomarValor")
     div(id = "informacion") 
-      h2 Visualice aquí sus películas favoritas:
+      h2(class="infoTitulo") VISUALICE SUS PELICULAS FAVORITAS
     
-  script(src="/script.js") 
-  link(rel="stylesheet", href="/home.css")    
+  script(src="/script_home.js") 
+    

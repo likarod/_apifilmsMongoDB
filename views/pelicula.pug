@@ -3,24 +3,48 @@ html
         title= "Peli final"
     body
         div
+            div
+                nav
+                    a(href="/") INICIO
             h1=mensaje
+            section
+                article
+                    p El titulo de la película es  
+                     span=tituloPeli
+            section
+                article
+                    p El año de la película es 
+                     span=epocaPeli
+            section
+                article
+                    p El género de la película es 
+                     span=generoPeli
+            section
+                article
+                    p El director de la pelicula es  
+                     span=peliDirector
+            section
+                article
+                    p Los actores protagonistas son 
+                     span=actorPeli
+            section
+                article
+                    p Sinopsis 
+                     span=sinopsisPeli
+            section
+                article
+                    p Idiomas: 
+                     span=idiomasPeli
+            section
+                article
+                    p Puntuacion: 
+                     span=puntuacionPeli
+            section
+                article
+                    p Producción: 
+                     span=productorPeli
             div
-            p El titulo de la película es  
-                span=tituloPeli
-            div
-            p El año de la película es 
-                span=epocaPeli
-            div
-            p El género de la película es 
-                span=generoPeli
-            div
-            p El director de la pelicula es  
-                span=peliDirector
-            div
-            p Los actores protagonistas son 
-                span=actorPeli
-            div
-            img(src=Poster, alt="Poster película")
+            img(src=Poster, id= "poster" alt="Poster película")
             div 
             input(type="button", value="Guardar", id="btnFavorito")
-    script(src="/script2.js") 
+    script(src="/script2_ls.js") 
