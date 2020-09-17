@@ -13,23 +13,23 @@ const connect =  async () => {
 }   
 
 /*
-Método para poder crear en el BBDD los documentos de las películas guardadas desde el FORM.pug.
+Método para poder crear en el BBDD los documentos de las películas guardadas desde el FORM.pug y desd FILM/:titulo.pug.
 */
-exports.crearDocPeliForm = async (datos) => {
+exports.crearDocPeli = async (datos) => {
     const client = await connect ();
-    console.log("**************")
+    console.log("++++++++++++++++++")
     console.log(datos)
     const myFilm = {
-        Titulo: datos.titulo,
-        Epoca: datos.epoca,
-        Genero: datos.genero,
-        Director: datos.director,
-        Actores: datos.actors,
-        Sinopsis: datos.sinopsis,
-        Idiomas: datos.idiomas,
-        Puntuacion: datos.puntuacion,
-        Produccion: datos.producter,
-        Poster: datos.image}
+        Titulo: datos.Titulo,
+        Epoca: datos.Epoca,
+        Genero: datos.Genero,
+        Director: datos.Director,
+        Actores: datos.Actors,
+        Sinopsis: datos.Sinopsis,
+        Idiomas: datos.Idiomas,
+        Puntuacion: datos.Puntuacion,
+        Produccion: datos.Producter,
+        Poster: datos.Image}
     const result = await client
     .db("films")
     .collection("Peliculas")
@@ -38,30 +38,6 @@ exports.crearDocPeliForm = async (datos) => {
     return result;
 }
 
-
-/*
-Método para crear documentos en la BBDD guardando las películas favoritas desde la ruta film/:titulo 
-*/
-exports.crearDocPeliFavorita = async (datos) => {
-    const client = await connect();
-    const myFilm = {
-        Titulo: datos.titulo,
-        Epoca: datos.epoca,
-        Genero: datos.genero,
-        Director: datos.director,
-        Actores: datos.actors,
-        Sinopsis: datos.sinopsis,
-        Idiomas: datos.idiomas,
-        Puntuacion: datos.puntuacion,
-        Produccion: datos.producter,
-        Poster: datos.image}
-    const result = await client
-    .db("films")
-    .collection("Peliculas")
-    .insertOne(myFilm);
-    console.log(`New listing created with the following id: ${result.insertedId}`);
-    return result;
-}
 
 //Read
 

@@ -87,8 +87,7 @@ exports.getForm = (req, res) => {
 
 // Método POST para mostrar un éxito en el formulario.
 exports.postapiFilms = (req, res) => {
-    console.log(req)
-    bbdd.crearDocPeliForm(req.body)
+    bbdd.crearDocPeli(req.body)
     .then(() => {
       res.status(200).render("exito", {title: "Enviado con éxito", message: "Tu formulario se ha enviado con éxito"});
     })
