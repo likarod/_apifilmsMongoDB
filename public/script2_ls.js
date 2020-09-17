@@ -1,60 +1,38 @@
 /*
- ENRUTADO A form.pug 
- Evento para guardar los dato en el LocalStorage cada vez que se añada nuevos valores en el formulario. 
-*/
+Se genera un FAKE FORM para poder realizar un POST y mandar los datos a la BBDD y que se puedan leer rápidamente.
+*/ 
+let favorito = document.getElementById("btnFavorito");
+    favorito.addEventListener("click", () => {
+    // POST DATA para mandar los datos al fake FORM
+    let nuevoFavorito = new FormData(); 
+    let datos = document.getElementsByTagName("span");
 
-let boton = document.getElementById("btnForm");
-let arr = [];
-if ( boton != null){
-  boton.addEventListener("click", ()=> {
-    let nuevaPeli= {
-        "Titulo": document.getElementById("nombre").value,
-        "Época": document.getElementById("epoca").value,
-        "Género": document.getElementById("genero").value,
-        "Director": document.getElementById("director").value,
-        "Actores": document.getElementById("actors"),
-        "Sinopsis": document.getElementById("sinopsis").value,
-        "Idiomas": document.getElementById("idiomas").value,
-        "Puntuacion": document.getElementById("puntuacion").value,
-        "Produccion": document.getElementById("produccion").value
-    }
-    if (JSON.parse(localStorage.getItem("Peliculas")) === null) arr = [];
-    else arr = JSON.parse(localStorage.getItem("Peliculas"));
-    arr.push(nuevaPeli);
-    localStorage.setItem("Peliculas", JSON.stringify(arr))
+    console.log(datos[0].innerText)
+        nuevoFavorito.append("Titulo", datos[0].innerText);
+        nuevoFavorito.append("Epoca", datos[1].innerText);
+        nuevoFavorito.append("Genero", datos[2].innerText)
+        nuevoFavorito.append("Director", datos[3].innerText);
+        nuevoFavorito.append("Actores", datos[4].innerText)
+        nuevoFavorito.append("Sinopsis", datos[5].innerText)
+        nuevoFavorito.append("Idiomas", datos[6].innerText)
+        nuevoFavorito.append("Puntuacion", datos[7].innerText)
+        nuevoFavorito.append("Produccion", datos[8].innerText)
+        nuevoFavorito.append("Poster", document.getElementById("poster").src);
+        console.log(nuevoFavorito);
+
+        //Aquí se utiliza AJAX para mandar los datos y realizar el POST. También se especifica la ruta a donde quiere recargar.  
     
-});
+       let xhr = new XMLHttpRequest();
+       //Send the proper header information along with the request
+        
+            xhr.open('POST', "/api/films", true);
 
-} 
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
-/*
-Se realiza un IF / ELSE para que no se carga el anterior evento cuando dicho botón no existe.
-Se enruta a /films/"titulo de la API".
-*/
-
-else {
-  let favorito = document.getElementById("btnFavorito");
-   favorito.addEventListener("click", () => {
-       let datos = document.getElementsByTagName("span");
-       let nuevoFavorito = {
-           "Titulo": datos[0].innerText,
-            "Época": datos[1].innerText,
-            "Género": datos[2].innerText,
-            "Director": datos[3].innerText,
-            "Actores": datos[4].innerText,
-            "Sinopsis": datos[5].innerText,
-            "Idiomas": datos[6].innerText,
-            "Puntuacion": datos[7].innerText,
-            "Produccion": datos[8].innerText,
-            "Poster": document.getElementById("poster").src
-        }
-       console.log(nuevoFavorito)
-       if (JSON.parse(localStorage.getItem("Peliculas")) === null) arr = [];
-       else arr = JSON.parse(localStorage.getItem("Peliculas"));
-       arr.push(nuevoFavorito);
-       localStorage.setItem("Peliculas", JSON.stringify(arr))
-       let urlNueva = "/"
-       location.replace(urlNueva);
-   })
-}
+            xhr.onload = function(){
+            console.log("Realizado el envio");
+            console.log(this.response);
+            };
+        xhr.send(nuevoFavorito);
+    });
 

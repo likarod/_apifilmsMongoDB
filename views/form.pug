@@ -9,6 +9,9 @@ html
     h1=titulo1
       form(action = "/api/films", method = "POST")
          div
+            p Posicion:
+            p(id="posicion")=idPosicion 
+         div
             label(for = "titulo") Titulo:  
             br
             input(type = "text" name = "titulo" id="nombre" value=tituloEdit)
@@ -54,6 +57,8 @@ html
             input(type="text", name="producter" id="produccion" value=produccionEdit) 
          div  
             label(for = "imagen") Póster:
+            br
+            img(src=imagenEdit, alt="imagen", id="imagen")
             br
             input(type="file", name="image")
          button(type="reset") Restablecer

@@ -1,5 +1,6 @@
-/* Enrutado a home.pug
-Evento para buscar películas y enrutar a otra página.
+/* 
+Enrutado a home.pug
+Evento para buscar películas desde la API y enrutarla (reemplazarla) a otra página.
 */
 let pelis = document.getElementById("tomarValor");
 pelis.addEventListener("click", ()=> {
@@ -12,7 +13,9 @@ pelis.addEventListener("click", ()=> {
 
 /*
 Enrutado a home.pug.
-Función para mostrar las películas guardadas. Sólo se puede interactuar con el LocalStorage a través del Front. A raíz de ello, se realiza los eventos en el script. 
+Función para mostrar las películas guardadas. 
+Sólo se puede interactuar con el LocalStorage a través del Front. 
+A raíz de ello, se realiza los eventos en el script. 
 */
 
 function leerPeliculas (){
@@ -39,6 +42,7 @@ function leerPeliculas (){
     }
     
     for(let i = 0; i < dataPeli.length; i++) { 
+      // BOTON PARA BORRAR
       document.getElementById(`borrar${i}`).onclick = () => {
       let borrar = JSON.parse(localStorage.getItem("Peliculas")); 
       borrar.splice(i, 1);
@@ -50,16 +54,15 @@ function leerPeliculas (){
        
       }  
 
+      //BOTON PARA EDITAR.
       let botonEdicion = document.getElementById(`editar${i}`)
       botonEdicion.addEventListener("click", () =>{
-        let edicion = JSON.parse(localStorage.getItem("Peliculas"));
-        console.log(edicion);
-
         //http://localhost:3000/edit/0?Titulo=Titanic&Genre=drama
-        let urlEdicion = `/films/edit/${i}?Titulo=${edicion[i].Titulo}&Year=${edicion[i].Época}&Genre= ${edicion[i].Género}&Director=${edicion[i].Director}&Actors=${edicion[i].Actores}&Sinopsis=${edicion[i].Sinopsis}&Idiomas=${edicion[i].Idiomas}&Puntuacion=${edicion[i].Puntuacion}&Produccion=${edicion[i].Produccion}`
+        let urlEdicion = `/films/edit/${dataPeli[i].Titulo}`
         location.replace(urlEdicion);
       }) 
-    
+      
+      //BOTON DETALLE.
       let botonDetalle = document.getElementById(`detalles${i}`)
       botonDetalle.addEventListener("click", () => {
         let detalle = JSON.parse(localStorage.getItem("Peliculas"));
