@@ -3,7 +3,13 @@ const bbdd = require("./modulos/m_bbdd.js");
 
 // Renderizar el HOME para buscar las películas favolitas.
 exports.getBuscador = (req, res) => {
-    res.render ("home", {title: "Bienvenido/a.", message: "BIENVENIDO"});
+    bbdd.leerDocPeli(req)
+    .then((datos)=> {console.log(datos)
+        res.render ("home", {title: "Bienvenido/a.", message: "BIENVENIDO", 
+        datos})
+    })
+    .catch((e)=> console.log("ocurrió un error:"+e))
+
 }
 
 // Método para llamar a la API
@@ -16,8 +22,11 @@ exports.getapiFilms = (req, res) => {
     .then(function(data) {
     res.json(data);
     })
+    .catch((e)=>{
+        console.log("error"+e)
+    })
 }
-// Método para actualizar del LS las películas.
+// Método para leer las películas desde la BBDD.
 exports.getPeliEditar = (req, res) => {
     console.log(req.query);
     bbdd.leerDocPeli(req.params.titulo)
@@ -85,7 +94,12 @@ exports.getForm = (req, res) => {
     
 }
 
-// Método POST para mostrar un éxito en el formulario.
+// Método para mostar Error 404.
+exports.getError = (req, res) => {
+    res.status(404).render("error", {title: "Oh, lo siento, tienes un error 404"});
+}
+
+// Método POST para crear un nuevo documento en la BBDD.
 exports.postapiFilms = (req, res) => {
     bbdd.crearDocPeli(req.body)
     .then(() => {
@@ -93,7 +107,12 @@ exports.postapiFilms = (req, res) => {
     })
     .catch((e)=> console.log("ocurrió un error:"+e))
 }
-// Método para mostar Error 404.
-exports.getError = (req, res) => {
-    res.status(404).render("error", {title: "Oh, lo siento, tienes un error 404"});
+
+//Método POST para borrar un documento de la BBDD.
+exports.postDeleteFilms = (req, res) => {
+    bbdd.borrarDocPeli (req.body)
+    .then(() => {
+        res.status(200).render("exito")
+    })
+    .catch((e) => console.log("ocurrió un error"+e))
 }

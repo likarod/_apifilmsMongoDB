@@ -13,64 +13,52 @@ pelis.addEventListener("click", ()=> {
 
 /*
 Enrutado a home.pug.
-Función para mostrar las películas guardadas. 
-Sólo se puede interactuar con el LocalStorage a través del Front. 
-A raíz de ello, se realiza los eventos en el script. 
+Función para redireccionar al Peliculas.pug para mostar los detalles.
 */
 
-function leerPeliculas (){
-    let dataPeli = JSON.parse(localStorage.getItem("Peliculas"));
-    console.log(dataPeli);
-    for(let i = 0; i < dataPeli.length; i++) {
-      let info = `<br>
-      <section class="lista_cartas"> 
-        <article class="cartas">
-          <header class="cabecera_cartas">
-            <h2> PELÍCULA ${i+1} 
-          </header>
-          <p class="dataName"> Titulo: ${dataPeli[i].Titulo}</p>
-          <p class="dataYear"> Año de la película: ${dataPeli[i].Época}</p>
-          <p class="dataGenre"> Género de la película: ${dataPeli[i].Género}</p>
-          <p class="dataDirector"> Director: ${dataPeli[i].Director}</p>
-          <img class="dataPoster" src=${dataPeli[i].Poster}>
-        </article>
-        <input type="button" id="borrar${i}" value="Borrar">
-        <input type="button" id="editar${i}" value="Editar">
-        <input type="button" id="detalles${i}" value="Detalles">
-      </section>`
-      document.getElementById("informacion").innerHTML += info + "\n"; 
-    }
-    
-    for(let i = 0; i < dataPeli.length; i++) { 
-      // BOTON PARA BORRAR
-      document.getElementById(`borrar${i}`).onclick = () => {
-      let borrar = JSON.parse(localStorage.getItem("Peliculas")); 
-      borrar.splice(i, 1);
-      console.log(borrar)
-      console.log("Se ha borrado el registo" + i);
-      localStorage.setItem("Peliculas", JSON.stringify(borrar))
-      let url = "/"
-      location.replace (url)
-       
-      }  
+function redireccionarDetalle (index) {
+  let urlDetalle = `/films/detalle/${index}`
+  location.replace(urlDetalle);
+}
 
-      //BOTON PARA EDITAR.
-      let botonEdicion = document.getElementById(`editar${i}`)
-      botonEdicion.addEventListener("click", () =>{
-        //http://localhost:3000/edit/0?Titulo=Titanic&Genre=drama
-        let urlEdicion = `/films/edit/${dataPeli[i].Titulo}`
-        location.replace(urlEdicion);
-      }) 
-      
-      //BOTON DETALLE.
-      let botonDetalle = document.getElementById(`detalles${i}`)
-      botonDetalle.addEventListener("click", () => {
-        let detalle = JSON.parse(localStorage.getItem("Peliculas"));
-        console.log(detalle);
-        let urlDetalle = `/films/detalle/${i}?Titulo=${detalle[i].Titulo}&Year=${detalle[i].Época}&Genre= ${detalle[i].Género}&Director=${detalle[i].Director}&Actors=${detalle[i].Actores}&Sinopsis=${detalle[i].Sinopsis}&Idiomas=${detalle[i].Idiomas}&Puntuacion=${detalle[i].Puntuacion}&Produccion=${detalle[i].Produccion}&Poster=${detalle[i].Poster}`
-        location.replace(urlDetalle);
+function redireccionarBorrar () {
+  let datos = document.getElementsByTagName("span");
+  borrarPeli = {
+      "Titulo": datos[0].innerText,
+      "Epoca": datos[1].innerText,
+      "Genero": datos[2].innerText,
+      "Director": datos[3].innerText,
+      "Poster": document.getElementById("poster").src
+  }
+
+  /*
+  "Actores": datos[4].innerText,
+  "Sinopsis": datos[5].innerText,
+  "Idiomas": datos[6].innerText,
+  "Puntuacion": datos[7].innerText,
+  "Produccion": datos[8].innerText,
+  */
+
+  fetch('/films/delete', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'},
+    body:JSON.stringify(borrarPeli)
       })
-    } 
- }
+    .then((respuesta)=>{
+      console.log("Se ha borrado con éxito")
+      console.log(respuesta)
+      })
+    .catch((e)=>{
+      console.log("error"+e)
+      });
 
-leerPeliculas();
+} 
+
+//       //BOTON PARA EDITAR.
+//       let botonEdicion = document.getElementById(`editar${i}`)
+//       botonEdicion.addEventListener("click", () =>{
+//         //http://localhost:3000/edit/0?Titulo=Titanic&Genre=drama
+//         let urlEdicion = `/films/edit/${dataPeli[i].Titulo}`
+//         location.replace(urlEdicion);
+//       }) 

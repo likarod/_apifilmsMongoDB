@@ -1,3 +1,5 @@
+const { Cursor } = require('mongodb');
+
 /* 
 Módulo que se utilizará para hacer consultas a las bbdd de "FILMS". 
 - Documento creado 14/09
@@ -24,12 +26,12 @@ exports.crearDocPeli = async (datos) => {
         Epoca: datos.Epoca,
         Genero: datos.Genero,
         Director: datos.Director,
-        Actores: datos.Actors,
+        Actores: datos.Actores,
         Sinopsis: datos.Sinopsis,
         Idiomas: datos.Idiomas,
         Puntuacion: datos.Puntuacion,
-        Produccion: datos.Producter,
-        Poster: datos.Image}
+        Produccion: datos.Produccion,
+        Poster: datos.Poster}
     const result = await client
     .db("films")
     .collection("Peliculas")
@@ -38,18 +40,37 @@ exports.crearDocPeli = async (datos) => {
     return result;
 }
 
+//Leer todas las películas
 
-//Read
-
-exports.leerDocPeli = async (nombrePeli)  => {
+exports.leerDocPeli = async () => {
     const client = await connect();
     result = await client
         .db("films")
         .collection("Peliculas")
-        .findOne({ Titulo: nombrePeli });
+        .find()
+        .toArray();
+    if(result) {
+        console.log("Se han encontrado todos los documentos de la colección");
+        return result
+    } else { 
+        console.log("No se han encontrado los documentos.")
+        return null
+    }
+}
+
+//Detalle
+
+exports.detalleDocPeli = async (nombrePeli)  => {
+    const client = await connect();
+    result = await client
+        .db("films")
+        .collection("Peliculas")
+        .findOne({ 
+            Titulo: nombrePeli,
+         });
     console.log(result)
     if (result) {
-        console.log(`Se ha encontrado la pelicula con el título: '${nombrePeli}' en la colleción`);
+        console.log(`Se ha encontrado la pelicula con el título: '${nombrePeli}' en la colección`);
         return result;
     } else {
         console.log(`No se encuentra el título: '${nombrePeli}'`);
@@ -84,12 +105,18 @@ exports.editarDocPeli = async (Titulo, nuevoTitulo) => {
 }
 
 // //Delete
-exports.borrarDocPeli = async (nombredelTitulo) => {
+exports.borrarDocPeli = async (datos) => {
     const client = await connect();
     result = await client
         .db("films")
         .collection("Peliculas")
-        .deleteOne({ Titulo: nombredelTitulo });
+        .deleteOne({ 
+            Titulo: datos.Titulo,
+            Epoca: datos.Epoca,
+            Genero: datos.Genero,
+            Director: datos.Director,
+            Poster: datos.Poster
+        });
     console.log(`${result.deletedCount} document(s) was/were deleted.`);
     return result;
 }
