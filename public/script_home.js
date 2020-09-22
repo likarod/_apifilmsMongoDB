@@ -21,23 +21,10 @@ function redireccionarDetalle (index) {
   location.replace(urlDetalle);
 }
 
-function redireccionarBorrar () {
-  let datos = document.getElementsByTagName("span");
+function borrarBBDD (Titulo) {
   borrarPeli = {
-      "Titulo": datos[0].innerText,
-      "Epoca": datos[1].innerText,
-      "Genero": datos[2].innerText,
-      "Director": datos[3].innerText,
-      "Poster": document.getElementById("poster").src
+      "Titulo": Titulo,
   }
-
-  /*
-  "Actores": datos[4].innerText,
-  "Sinopsis": datos[5].innerText,
-  "Idiomas": datos[6].innerText,
-  "Puntuacion": datos[7].innerText,
-  "Produccion": datos[8].innerText,
-  */
 
   fetch('/films/delete', {
     method: 'POST',
@@ -48,12 +35,14 @@ function redireccionarBorrar () {
     .then((respuesta)=>{
       console.log("Se ha borrado con éxito")
       console.log(respuesta)
+      location.replace("/")
       })
     .catch((e)=>{
       console.log("error"+e)
       });
 
 } 
+
 
 //       //BOTON PARA EDITAR.
 //       let botonEdicion = document.getElementById(`editar${i}`)

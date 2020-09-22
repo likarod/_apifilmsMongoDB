@@ -21,6 +21,7 @@ html
         section(class="lista_cartas")
           article(class="cartas")
             header(class="cabecera_cartas")
+            span(id="posicion")=index
             p(class="dataName") Titulo: 
               span=film.Titulo
             p(class="dataYear") Año de la película: 
@@ -30,10 +31,14 @@ html
             p(class="dataDirector") Director: 
               span=film.Director
             img(class="dataPoster" id="poster" src=film.Poster)
+            br
+            input(type="button" id=`borrar${index}` value="Borrar" onclick=`borrarBBDD("${film.Titulo}")`)
+            input(type="button" id=`editar${index}` value="Editar")
+            input(type="button"  id=`detalle${index}` value="Detalles", onclick =`redireccionarDetalle(${index})`)
+  footer
+    header
+      div 
+        p Creative Commons 
 
-        input(type="button" value="Borrar" onclick=`redireccionarBorrar()`)
-        input(type="button" id=`editar${index}` value="Editar")
-        input(type="button"  id=`detalle${index}` value="Detalles", onclick =`redireccionarDetalle(${index})`)
-        
   script(src="/script_home.js") 
     

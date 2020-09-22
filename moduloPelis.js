@@ -48,6 +48,7 @@ exports.getPeliEditar = (req, res) => {
 }
 // Metodo para mostar en detalle de las películas. 
 exports.getPeliDetalle = (req, res) => {
+    bbdd.detalleDocPeli(req.query)
     console.log(req.query)
     res.render("pelicula", {
         tituloPeli: req.query.Titulo, 

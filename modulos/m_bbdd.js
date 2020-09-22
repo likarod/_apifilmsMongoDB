@@ -110,13 +110,8 @@ exports.borrarDocPeli = async (datos) => {
     result = await client
         .db("films")
         .collection("Peliculas")
-        .deleteOne({ 
-            Titulo: datos.Titulo,
-            Epoca: datos.Epoca,
-            Genero: datos.Genero,
-            Director: datos.Director,
-            Poster: datos.Poster
-        });
+        .deleteOne({Titulo: datos.Titulo});
+        console.log(datos.Titulo)
     console.log(`${result.deletedCount} document(s) was/were deleted.`);
     return result;
 }
