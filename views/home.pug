@@ -33,12 +33,14 @@ html
             img(class="dataPoster" id="poster" src=film.Poster)
             br
             input(type="button" id=`borrar${index}` value="Borrar" onclick=`borrarBBDD("${film.Titulo}")`)
-            input(type="button" id=`editar${index}` value="Editar")
-            input(type="button"  id=`detalle${index}` value="Detalles", onclick =`redireccionarDetalle(${index})`)
+            input(type="button" id=`editar${index}` value="Editar", onclick=`editarBBDD("${film.Titulo}")`)
+            input(type="button"  id=`detalle${index}` value="Detalles", onclick =`detalleBBDD("${film.Titulo}")`)
   footer
     header
       div 
         p Creative Commons 
+        p Lina Katherine Larrea
+
 
   script(src="/script_home.js") 
     

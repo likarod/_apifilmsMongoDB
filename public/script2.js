@@ -35,3 +35,4 @@ favorito.addEventListener("click", () => {
         .catch((e)=>{
           console.log("error"+e)
           })});
+

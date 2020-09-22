@@ -1,65 +1,63 @@
 html
-html
    head
-      title Guarde su película favorita.
+      title Guarde su película favorita. 
    body
-    div
-        nav
-            a(href="/") Inicio.
-    h1=titulo1
-      form(action = "/api/films", method = "POST")
+      header
          div
-            p Posicion:
-            p(id="posicion")=idPosicion 
-         div
-            label(for = "titulo") Titulo:  
+            nav
+               a(href="/") Inicio.
+      main 
+      h1=titulo1 
+         form(action = ruta, method = "POST")
+            div
+               label(for = "titulo") Titulo:  
+               br
+               input(type = "text" name = "Titulo" id="nombre" value=tituloEdit)
             br
-            input(type = "text" name = "Titulo" id="nombre" value=tituloEdit)
-         br
-         div
-            label(for = "epoca") Año:
-            br  
-            input(type ="text" name = "Epoca" id = "epoca" value=epocaEdit)
-         br
-         div
-            label(for = "genero") Género:
-            br  
-            input(type = "text" name = "Genero" id = "genero" value=generoEdit)
-         br
-         div
-            label(for = "director") Director:
-            br  
-            input(type = "text" name = "Director" id = "director" value=directorEdit)
-         br
-         div
-            label(for = "actors") Actores principales:
-            br  
-            input(type = "text" name = "Actors" id= "actors" value=actorsEdit)
-         br
-         div  
-            label(for= "sinopsis") Sinopsis:
+            div
+               label(for = "epoca") Año:
+               br  
+               input(type ="text" name = "Epoca" id = "epoca" value=epocaEdit)
             br
-            input(type="text", name="Sinopsis" id="sinopsis" value=sinopsisEdit)
-         br
-         div
-            label(for="idiomas") Idiomas:
+            div
+               label(for = "genero") Género:
+               br  
+               input(type = "text" name = "Genero" id = "genero" value=generoEdit)
             br
-            input(type="text", name="Idiomas" id="idiomas" value=idiomasEdit)
-         br
-         div
-            label(for="puntuacion") Puntuacion:
+            div
+               label(for = "director") Director:
+               br  
+               input(type = "text" name = "Director" id = "director" value=directorEdit)
             br
-            input(type="number", name="Puntuacion" id="Puntuacion" value=puntuacionEdit)
-         br
-         div
-            label(for="produccion") Producción:
+            div
+               label(for = "actors") Actores principales:
+               br  
+               input(type = "text" name = "Actors" id= "actors" value=actorsEdit)
             br
-            input(type="text", name="Producter" id="produccion" value=produccionEdit) 
-         div  
-            label(for = "Imagen") Póster:
+            div  
+               label(for= "sinopsis") Sinopsis:
+               br
+               input(type="text", name="Sinopsis" id="sinopsis" value=sinopsisEdit)
             br
-            img(src=imagenEdit, alt="imagen", id="imagen")
+            div
+               label(for="idiomas") Idiomas:
+               br
+               input(type="text", name="Idiomas" id="idiomas" value=idiomasEdit)
             br
-            input(type="file", name="Poster")
-         button(type="reset") Restablecer
-         button(type = "submit" id = "btnForm") Guarde sus favoritos
+            div
+               label(for="puntuacion") Puntuacion:
+               br
+               input(type="number", name="Puntuacion" id="Puntuacion" value=puntuacionEdit)
+            br
+            div
+               label(for="produccion") Producción:
+               br
+               input(type="text", name="Producter" id="produccion" value=produccionEdit) 
+            div  
+               label(for = "Imagen") Póster:
+               br
+               img(src=imagenEdit, alt="imagen", id="imagen")
+               br
+               input(type="file", name="Poster")
+            button(type="reset") Restablecer
+            button(type = "submit" id = "btnForm") Guardar.

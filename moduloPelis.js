@@ -1,18 +1,7 @@
 const fetch = require ("node-fetch");
 const bbdd = require("./modulos/m_bbdd.js");
 
-// Renderizar el HOME para buscar las películas favolitas.
-exports.getBuscador = (req, res) => {
-    bbdd.leerDocPeli(req)
-    .then((datos)=> {console.log(datos)
-        res.render ("home", {title: "Bienvenido/a.", message: "BIENVENIDO", 
-        datos})
-    })
-    .catch((e)=> console.log("ocurrió un error:"+e))
-
-}
-
-// Método para llamar a la API
+// Método para llamar a la API 
 exports.getapiFilms = (req, res) => {
     const titulo = req.params.titulo;
     fetch(`http://www.omdbapi.com/?t=${titulo}&apikey=12267320`)
@@ -26,42 +15,61 @@ exports.getapiFilms = (req, res) => {
         console.log("error"+e)
     })
 }
-// Método para leer las películas desde la BBDD.
-exports.getPeliEditar = (req, res) => {
-    console.log(req.query);
-    bbdd.leerDocPeli(req.params.titulo)
-    .then((datos)=> console.log(datos))
+
+// Renderiza el HOME y buscar las películas favolitas desde el Buscador.
+exports.getBuscador = (req, res) => {
+    bbdd.leerDocPeli(req)
+    .then((datos)=> {
+        res.render ("home", {title: "Bienvenido/a.", message: "BIENVENIDO", 
+        datos})
+    })
     .catch((e)=> console.log("ocurrió un error:"+e))
-    res.render("form", {
-        idPosicion: req.params.id,
-        tituloEdit: req.query.Titulo, 
-        epocaEdit: req.query.Year, 
-        generoEdit: req.query.Genre, 
-        directorEdit: req.query.Director, 
-        actorsEdit: req.query.Actors, 
-        sinopsisEdit: req.query.Sinopsis,
-        idiomasEdit: req.query.Idiomas,
-        puntuacionEdit: req.query.Puntuacion, 
-        produccionEdit: req.query.Produccion,
-        imagenEdit: req.query.Poster
-    })
+
 }
-// Metodo para mostar en detalle de las películas. 
+
+// Método para los campos a editar del FORM de las películas desde la BBDD.
+exports.getPeliEditar = (req, res) => {
+    bbdd.detalleDocPeli(req.params.titulo)
+    .then((datos)=> {
+        console.log(datos)
+        res.render("form", {
+            ruta:"/films/edit",
+            titulo1: "¿Qué película desea actualizar?",
+            tituloEdit: datos.Titulo, 
+            epocaEdit: datos.Epoca, 
+            generoEdit: datos.Genero, 
+            directorEdit: datos.Director, 
+            actorsEdit: datos.Actores, 
+            sinopsisEdit: datos.Sinopsis,
+            idiomasEdit: datos.Idiomas,
+            puntuacionEdit: datos.Puntuacion, 
+            produccionEdit: datos.Produccion,
+            imagenEdit: datos.Poster
+        }) })
+    .catch((e)=> console.log("ocurrió un error:"+e))
+
+}
+
+
+// Metodo para mostar en detalle de las películas en el pug PELICULAS. 
 exports.getPeliDetalle = (req, res) => {
-    bbdd.detalleDocPeli(req.query)
-    console.log(req.query)
-    res.render("pelicula", {
-        tituloPeli: req.query.Titulo, 
-        epocaPeli: req.query.Year, 
-        generoPeli: req.query.Genre,
-        peliDirector: req.query.Director, 
-        actorPeli: req.query.Actors,
-        sinopsisPeli: req.query.Sinopsis,
-        idiomasPeli: req.query.Idiomas, 
-        puntuacionPeli: req.query.Puntuacion, 
-        producterPeli: req.query.Produccion,
-        Poster: req.query.Poster
+    bbdd.detalleDocPeli(req.params.titulo)
+    .then((datos)=> {   
+        res.render("pelicula", {
+            tituloPeli: datos.Titulo, 
+            epocaPeli: datos.Epoca, 
+            generoPeli: datos.Genero,
+            peliDirector: datos.Director, 
+            actorPeli: datos.Actores,
+            sinopsisPeli: datos.Sinopsis,
+            idiomasPeli: datos.Idiomas, 
+            puntuacionPeli: datos.Puntuacion, 
+            producterPeli: datos.Produccion,
+            Poster: datos.Poster
+        })
+
     })
+    .catch((e)=> console.log("Ha ocurrido un problema:"+e))
 }
 
 // Método para renderizar los datos de la API en un PUG.
@@ -91,22 +99,37 @@ exports.getpeliFinal = (req, res) => {
 
 // Método para renderizar el formulario de "Guardar favoritos"
 exports.getForm = (req, res) => { 
-    res.render("form", {titulo1: "¿Qué película desea guardar?."})
+    res.render("form", {titulo1: "¿Qué película desea guardar?.", ruta: "/api/films"})
     
 }
 
-// Método para mostar Error 404.
+// Método para mostar el PUG Error 404.
 exports.getError = (req, res) => {
     res.status(404).render("error", {title: "Oh, lo siento, tienes un error 404"});
 }
 
 // Método POST para crear un nuevo documento en la BBDD.
-exports.postapiFilms = (req, res) => {
-    bbdd.crearDocPeli(req.body)
+exports.posapiFilms = (req, res) => {
+    bbdd.crearDocPeli( req.body)
     .then(() => {
       res.status(200).render("exito", {title: "Enviado con éxito", message: "Tu formulario se ha enviado con éxito"});
     })
     .catch((e)=> console.log("ocurrió un error:"+e))
+}
+
+// Método para editar y actualizar los documentos del FORM. 
+exports.posEditar = (req, res) => {
+    const Titulo = req.params.titulo
+    console.log("PASO 2 ++++++++++++++++++++++++++++++++++")
+    bbdd.editarDocPeli(Titulo, req.body)
+    .then(()=> {
+        res.status(200).render("exito", {title: "Documento actualizado", message: "Se ha actualizado con éxito "})
+    })
+    .catch((e)=> console.log("ocurrió un error inesperad:;"+e))
+    console.log(Titulo)
+    console.log(req.body)
+    console.log("aaaaaaaaaaalkdjakldjakdla")
+
 }
 
 //Método POST para borrar un documento de la BBDD.

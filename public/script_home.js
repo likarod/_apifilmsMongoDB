@@ -16,11 +16,12 @@ Enrutado a home.pug.
 Función para redireccionar al Peliculas.pug para mostar los detalles.
 */
 
-function redireccionarDetalle (index) {
-  let urlDetalle = `/films/detalle/${index}`
+function detalleBBDD (Titulo) {
+  let urlDetalle = `/films/detalle/${Titulo}`
   location.replace(urlDetalle);
 }
 
+//Función para el botón Borrar.
 function borrarBBDD (Titulo) {
   borrarPeli = {
       "Titulo": Titulo,
@@ -43,11 +44,15 @@ function borrarBBDD (Titulo) {
 
 } 
 
+//Función para el botor Editar.
 
-//       //BOTON PARA EDITAR.
-//       let botonEdicion = document.getElementById(`editar${i}`)
-//       botonEdicion.addEventListener("click", () =>{
-//         //http://localhost:3000/edit/0?Titulo=Titanic&Genre=drama
-//         let urlEdicion = `/films/edit/${dataPeli[i].Titulo}`
-//         location.replace(urlEdicion);
-//       }) 
+function editarBBDD (Titulo) {
+  let urlDetalle = `/films/edit/${Titulo}`
+  location.replace(urlDetalle);
+}
+      // let botonEdicion = document.getElementById(`editar${i}`)
+      // botonEdicion.addEventListener("click", () =>{
+      //   //http://localhost:3000/edit/0?Titulo=Titanic&Genre=drama
+      //   let urlEdicion = `/films/edit/${dataPeli[i].Titulo}`
+      //   location.replace(urlEdicion);
+      // }) 

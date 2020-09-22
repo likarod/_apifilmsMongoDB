@@ -20,7 +20,6 @@ Método para poder crear en el BBDD los documentos de las películas guardadas d
 exports.crearDocPeli = async (datos) => {
     const client = await connect ();
     console.log("++++++++++++++++++")
-    console.log(datos)
     const myFilm = {
         Titulo: datos.Titulo,
         Epoca: datos.Epoca,
@@ -60,20 +59,17 @@ exports.leerDocPeli = async () => {
 
 //Detalle
 
-exports.detalleDocPeli = async (nombrePeli)  => {
+exports.detalleDocPeli = async (datos)  => {
     const client = await connect();
     result = await client
         .db("films")
         .collection("Peliculas")
-        .findOne({ 
-            Titulo: nombrePeli,
-         });
-    console.log(result)
+        .findOne({Titulo: datos});
     if (result) {
-        console.log(`Se ha encontrado la pelicula con el título: '${nombrePeli}' en la colección`);
+        console.log(`Se ha encontrado la pelicula con el título: '${datos}' en la colección`);
         return result;
     } else {
-        console.log(`No se encuentra el título: '${nombrePeli}'`);
+        console.log(`No se encuentra el título: '${datos.Titulo}'`);
         return null;
     }
 }
@@ -91,16 +87,15 @@ exports.editarDocPeli = async (Titulo, nuevoTitulo) => {
         .collection("Peliculas")
         .updateOne(
             { Titulo: Titulo }, 
-            { $set: {Titulo:nuevoTitulo} },
-            // { upsert: true }
-            );
+            { $set: {Titulo: nuevoTitulo}},
+            { upsert: true });
 
     console.log(`${result.matchedCount} documentos que coinciden con los criterios de consulta.`);
     if (result.upsertedCount > 0) {
-        console.log(`One document was inserted with the id ${result.upsertedId._id}`);
+        console.log(`Un documento insertado con el id: ${result.upsertedId._id}`);
         return result;
     } else {
-        console.log(`${result.modifiedCount} documentos modificados.`);
+        console.log(`No se ha podido modificar este ${result.modifiedCount} documento.`);
     }
 }
 
@@ -111,7 +106,6 @@ exports.borrarDocPeli = async (datos) => {
         .db("films")
         .collection("Peliculas")
         .deleteOne({Titulo: datos.Titulo});
-        console.log(datos.Titulo)
     console.log(`${result.deletedCount} document(s) was/were deleted.`);
     return result;
 }
