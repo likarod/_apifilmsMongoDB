@@ -1,11 +1,10 @@
-const { Cursor } = require('mongodb');
-
 /* 
 Módulo que se utilizará para hacer consultas a las bbdd de "FILMS". 
 - Documento creado 14/09
 */
 const MongoClient = require('mongodb').MongoClient;
 const url = "mongodb://localhost:27017";
+const ObjectID = require('mongodb').ObjectID;
 
 //Create.
 const connect =  async () => {
@@ -80,16 +79,27 @@ exports.detalleDocPeli = async (datos)  => {
 /*
  Método para actualizar/editar un documento de la BBDD. 
 */
-exports.editarDocPeli = async (Titulo, nuevoTitulo) => {
+exports.editarDocPeli = async (_id, docuEditado) => {
     const client = await connect();
     result = await client
         .db("films")
         .collection("Peliculas")
         .updateOne(
-            { Titulo: Titulo }, 
-            { $set: {Titulo: nuevoTitulo}},
-            { upsert: true });
-
+            {"_id": ObjectID(_id) }, // Filtado
+            { $set: {
+                "Titulo": docuEditado.Titulo,
+                "Epoca": docuEditado.Epoca,
+                "Genero": docuEditado.Genero,
+                "Director": docuEditado.Director,
+                "Actores": docuEditado.Actors,
+                "Sinopsis": docuEditado.Sinopsis,
+                "Idiomas": docuEditado.Idiomas,
+                "Puntuacion": docuEditado.Puntuacion,
+                "Produccion": docuEditado.Produccion,
+                "Poster": docuEditado.Poster
+            }}, //Actualizado
+            {upsert: true}
+            );
     console.log(`${result.matchedCount} documentos que coinciden con los criterios de consulta.`);
     if (result.upsertedCount > 0) {
         console.log(`Un documento insertado con el id: ${result.upsertedId._id}`);
@@ -97,6 +107,9 @@ exports.editarDocPeli = async (Titulo, nuevoTitulo) => {
     } else {
         console.log(`No se ha podido modificar este ${result.modifiedCount} documento.`);
     }
+      console.log(docuEditado) 
+      console.log(_id);
+  
 }
 
 // //Delete

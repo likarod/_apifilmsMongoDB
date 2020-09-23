@@ -1,6 +1,9 @@
 const fetch = require ("node-fetch");
 const bbdd = require("./modulos/m_bbdd.js");
 
+
+
+
 // Método para llamar a la API 
 exports.getapiFilms = (req, res) => {
     const titulo = req.params.titulo;
@@ -35,6 +38,7 @@ exports.getPeliEditar = (req, res) => {
         res.render("form", {
             ruta:"/films/edit",
             titulo1: "¿Qué película desea actualizar?",
+            _id: datos._id,
             tituloEdit: datos.Titulo, 
             epocaEdit: datos.Epoca, 
             generoEdit: datos.Genero, 
@@ -119,17 +123,14 @@ exports.posapiFilms = (req, res) => {
 
 // Método para editar y actualizar los documentos del FORM. 
 exports.posEditar = (req, res) => {
-    const Titulo = req.params.titulo
+    let _id = req.body.id
     console.log("PASO 2 ++++++++++++++++++++++++++++++++++")
-    bbdd.editarDocPeli(Titulo, req.body)
+    console.log(_id)
+    bbdd.editarDocPeli(_id, req.body)
     .then(()=> {
         res.status(200).render("exito", {title: "Documento actualizado", message: "Se ha actualizado con éxito "})
     })
     .catch((e)=> console.log("ocurrió un error inesperad:;"+e))
-    console.log(Titulo)
-    console.log(req.body)
-    console.log("aaaaaaaaaaalkdjakldjakdla")
-
 }
 
 //Método POST para borrar un documento de la BBDD.

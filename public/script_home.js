@@ -47,12 +47,6 @@ function borrarBBDD (Titulo) {
 //Función para el botor Editar.
 
 function editarBBDD (Titulo) {
-  let urlDetalle = `/films/edit/${Titulo}`
-  location.replace(urlDetalle);
+  let urlEditar = `/films/edit/${Titulo}`
+  location.replace(urlEditar);
 }
-      // let botonEdicion = document.getElementById(`editar${i}`)
-      // botonEdicion.addEventListener("click", () =>{
-      //   //http://localhost:3000/edit/0?Titulo=Titanic&Genre=drama
-      //   let urlEdicion = `/films/edit/${dataPeli[i].Titulo}`
-      //   location.replace(urlEdicion);
-      // }) 
