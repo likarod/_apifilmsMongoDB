@@ -46,5 +46,7 @@ html
             div
             img(src=Poster, id= "poster" alt="Poster película")
             div 
-            input(type="button", value="Guarde sus títulos favoritos.", id="btnFavorito") 
+            if(botton)
+                input(type="button", value="Guarde sus títulos favoritos.", id="btnFavorito")
+            else if(botton = false)
     script(src="/script2.js") 

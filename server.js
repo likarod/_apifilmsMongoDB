@@ -29,7 +29,7 @@ app.get("/films/edit/:titulo", pelis.getPeliEditar);
 //Ruta para mostrar el detalle de la película guarda en el LS en función de la posición.
 app.get("/films/detalle/:titulo", pelis.getPeliDetalle);
 // Ruta para mostrar el formulario.
-app.get("/form", pelis.getForm)
+app.get("/films/form/create/", pelis.getForm)
 // Ruta 404 Not Found.
 app.get("*", pelis.getError);
 
@@ -38,11 +38,11 @@ app.get("*", pelis.getError);
 ------> Rutas POST
 */
 // Ruta para crear documentos de la BBDDD desde el FORM y PELICULAS.
-app.post("/api/films", pelis.posapiFilms);
+app.post("/films/create", pelis.posCreateFilms);
 // Ruta para actualizar los campos del formuliario.
-app.post("/films/edit", pelis.posEditar)
+app.put("/films/edit", pelis.putEditarFilms)
 // Ruta para interactuar con la BBDD y borrar una película.
-app.post("/films/delete", pelis.postDeleteFilms);
+app.delete("/films/delete", pelis.postDeleteFilms);
 
 
 app.listen (3000, function ( ) { 

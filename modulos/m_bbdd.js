@@ -2,9 +2,8 @@
 Módulo que se utilizará para hacer consultas a las bbdd de "FILMS". 
 - Documento creado 14/09
 */
-const MongoClient = require('mongodb').MongoClient;
+const {MongoClient, ObjectID} = require('mongodb');
 const url = "mongodb://localhost:27017";
-const ObjectID = require('mongodb').ObjectID;
 
 //Create.
 const connect =  async () => {

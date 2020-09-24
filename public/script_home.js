@@ -28,7 +28,7 @@ function borrarBBDD (Titulo) {
   }
 
   fetch('/films/delete', {
-    method: 'POST',
+    method: 'DELETE',
     headers: {
       'Content-Type': 'application/json;charset=utf-8'},
     body:JSON.stringify(borrarPeli)

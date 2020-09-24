@@ -2,8 +2,10 @@
 Se genera un FAKE FORM para poder realizar un POST y mandar los datos a la BBDD y que se puedan leer rápidamente.
 */ 
 
+
 let favorito = document.getElementById("btnFavorito");
-favorito.addEventListener("click", () => {
+if(favorito!=null) {
+  favorito.addEventListener("click", () => {
 // POST DATA para mandar los datos al fake FORM
 // let nuevoFavorito = new FormData(); 
   let datos = document.getElementsByTagName("span");
@@ -22,17 +24,21 @@ favorito.addEventListener("click", () => {
       console.log(nuevoFavorito);
       //Aquí se utiliza el FETCH para mandar los datos y realizar el POST. También se especifica la ruta a donde quiere recargar. 
           
-      fetch('/api/films', {
+      fetch('/films/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json;charset=utf-8'},
         body:JSON.stringify(nuevoFavorito)
           })
         .then((respuesta)=>{
-          console.log("Se ha enviado con éxito")
+          console.log
+          ("Se ha enviado con éxito")
           console.log(respuesta)
+          location.replace("/")
           })
         .catch((e)=>{
           console.log("error"+e)
           })});
+}
+
 

@@ -36,8 +36,9 @@ exports.getPeliEditar = (req, res) => {
     .then((datos)=> {
         console.log(datos)
         res.render("form", {
-            ruta:"/films/edit",
-            titulo1: "¿Qué película desea actualizar?",
+            ruta:"/films/edit",    
+            metodo: "PUT",
+            titulo1: "¿Qué película desea actualizar?",       
             _id: datos._id,
             tituloEdit: datos.Titulo, 
             epocaEdit: datos.Epoca, 
@@ -48,7 +49,7 @@ exports.getPeliEditar = (req, res) => {
             idiomasEdit: datos.Idiomas,
             puntuacionEdit: datos.Puntuacion, 
             produccionEdit: datos.Produccion,
-            imagenEdit: datos.Poster
+            imagenEdit: datos.Poster,
         }) })
     .catch((e)=> console.log("ocurrió un error:"+e))
 
@@ -69,7 +70,8 @@ exports.getPeliDetalle = (req, res) => {
             idiomasPeli: datos.Idiomas, 
             puntuacionPeli: datos.Puntuacion, 
             producterPeli: datos.Produccion,
-            Poster: datos.Poster
+            Poster: datos.Poster,
+            botton: false
         })
 
     })
@@ -83,7 +85,7 @@ exports.getpeliFinal = (req, res) => {
     .then(function(response) {
     return response.json();
     })
-    .then(function(data) {
+    .then(function(data) {console.log(data.Plot)
         res.render("pelicula", {
             mensaje: "La película de su eleección ",
             tituloPeli: data.Title,
@@ -96,6 +98,7 @@ exports.getpeliFinal = (req, res) => {
             puntuacionPeli: data.imdbRating,
             productorPeli: data.Production,
             Poster: data.Poster,
+            botton: true
         });
     });
 }
@@ -103,7 +106,7 @@ exports.getpeliFinal = (req, res) => {
 
 // Método para renderizar el formulario de "Guardar favoritos"
 exports.getForm = (req, res) => { 
-    res.render("form", {titulo1: "¿Qué película desea guardar?.", ruta: "/api/films"})
+    res.render("form", {titulo1: "¿Qué película desea guardar?.", ruta:"/films/create", metodo:"POST"})
     
 }
 
@@ -113,7 +116,7 @@ exports.getError = (req, res) => {
 }
 
 // Método POST para crear un nuevo documento en la BBDD.
-exports.posapiFilms = (req, res) => {
+exports.posCreateFilms = (req, res) => {
     bbdd.crearDocPeli( req.body)
     .then(() => {
       res.status(200).render("exito", {title: "Enviado con éxito", message: "Tu formulario se ha enviado con éxito"});
@@ -122,7 +125,7 @@ exports.posapiFilms = (req, res) => {
 }
 
 // Método para editar y actualizar los documentos del FORM. 
-exports.posEditar = (req, res) => {
+exports.putEditarFilms = (req, res) => {
     let _id = req.body.id
     console.log("PASO 2 ++++++++++++++++++++++++++++++++++")
     console.log(_id)
